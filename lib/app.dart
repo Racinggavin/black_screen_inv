@@ -17,11 +17,23 @@ class App extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales: [
-        Locale('en'), // English, no country code
-        const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans', countryCode: 'CN'), // 'zh_Hans_CN'
-        const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant', countryCode: 'TW'), // 'zh_Hant_TW'
-      ],
+      supportedLocales:
+        S.delegate.supportedLocales,
+        //AppLocalizations.supportedLocales,
+      localeResolutionCallback: (Locale? locale, Iterable<Locale> supports) {
+        if(null != locale) {
+          Locale? matched;
+          int matchLevel = 3;
+          do {
+            matched = _getMatchLocale(locale, supports, matchLevel);
+          } while(matched == null && --matchLevel >= 0);
+          if(null != matched) {
+            print("match locale: '${_getLocaleString(matched)}'");
+            return matched;
+          }
+        }
+        return Locale('en');
+      },
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
@@ -29,4 +41,50 @@ class App extends StatelessWidget {
     );
   }
 
+  Locale? _getMatchLocale(Locale locale, Iterable<Locale> supports, int matchLevel) {
+    for (Locale l in supports) {
+      bool sameCountryCode = false;
+      bool sameScriptCode = false;
+      bool sameLanguageCode = false;
+      if (null != locale.countryCode && null != locale.countryCode) {
+        if(l.countryCode == locale.countryCode) {
+          sameCountryCode = true;
+        }
+      }
+      if(null != locale.scriptCode && null != locale.scriptCode) {
+        if(l.scriptCode == locale.scriptCode) {
+          sameScriptCode = true;
+        }
+      }
+      if(l.languageCode == locale.languageCode) {
+        sameLanguageCode = true;
+      }
+      switch(matchLevel) {
+        case 1:
+          if(sameLanguageCode)
+            return l;
+          break;
+        case 2:
+          if(sameLanguageCode && sameScriptCode)
+            return l;
+          break;
+        case 3:
+          if(sameLanguageCode && sameScriptCode && sameCountryCode)
+            return l;
+          break;
+      }
+    }
+    return null;
+  }
+
+  String _getLocaleString(Locale l) {
+    String localeString = "${l.languageCode}";
+    if(null != l.scriptCode) {
+      localeString += "_${l.scriptCode}";
+    }
+    if(null != l.countryCode) {
+      localeString += "_${l.countryCode}";
+    }
+    return localeString;
+  }
 }

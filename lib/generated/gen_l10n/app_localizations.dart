@@ -101,6 +101,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Homepage'**
   String get homePage;
+
+  /// No description provided for @content1.
+  ///
+  /// In en, this message translates to:
+  /// **'Did you see black screen?'**
+  String get content1;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

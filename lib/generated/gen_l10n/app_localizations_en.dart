@@ -9,4 +9,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homePage => 'Homepage';
+
+  @override
+  String get content1 => 'Did you see black screen?';
 }

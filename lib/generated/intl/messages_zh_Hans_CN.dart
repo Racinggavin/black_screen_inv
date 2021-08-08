@@ -21,6 +21,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "homePage": MessageLookupByLibrary.simpleMessage("主頁")
+        "content1": MessageLookupByLibrary.simpleMessage("您有看到黑屏画面闪过吗?"),
+        "homePage": MessageLookupByLibrary.simpleMessage("主页")
       };
 }

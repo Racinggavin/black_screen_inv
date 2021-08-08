@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'generated/l10n.dart';
+import 'package:black_screen_inv/generated/gen_l10n/app_localizations.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,7 +14,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Test"),
+        title: Text(
+          S.of(context).homePage
+          // AppLocalizations.of(context)!.homePage
+        ),
       ),
       body: Container(
         width: double.infinity,
@@ -22,7 +27,8 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Did you see black screen ?",
+              S.of(context).content1,
+              //AppLocalizations.of(context)!.content1,
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.purple,
