@@ -33,5 +33,5 @@ flutter:
   generate: true
   uses-material-design: true
 
-flutter_intl:
-  enabled: true
+#flutter_intl:
+#  enabled: true

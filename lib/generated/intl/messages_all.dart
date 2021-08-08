@@ -68,3 +68,15 @@ MessageLookupByLibrary? _findGeneratedMessagesFor(String locale) {
   if (actualLocale == null) return null;
   return _findExact(actualLocale);
 }
+
+bool initializeMessagesSync(String localeName) {
+  var availableLocale = Intl.verifiedLocale(
+      localeName, (locale) => _deferredLibraries[locale] != null,
+      onFailure: (_) => null);
+  if (availableLocale == null) {
+    return false;
+  }
+  initializeInternalMessageLookup(() => new CompositeMessageLookup());
+  messageLookup.addLocale(availableLocale, _findGeneratedMessagesFor);
+  return true;
+}

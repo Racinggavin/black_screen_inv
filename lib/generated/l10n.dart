@@ -1,4 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'intl/messages_all.dart';
@@ -11,6 +12,20 @@ import 'intl/messages_all.dart';
 // ignore_for_file: non_constant_identifier_names, lines_longer_than_80_chars
 // ignore_for_file: join_return_with_assignment, prefer_final_in_for_each
 // ignore_for_file: avoid_redundant_argument_values, avoid_escaping_inner_quotes
+
+S _lookupS(Locale locale) {
+  final name = (locale.countryCode?.isEmpty ?? false)
+      ? locale.languageCode
+      : locale.toString();
+  String localeName = Intl.canonicalizedLocale(name);
+  if(!initializeMessagesSync(localeName)) {
+    localeName = 'en';
+  }
+  Intl.defaultLocale = localeName;
+  final instance = S();
+  S._current = instance;
+  return instance;
+}
 
 class S {
   S();
@@ -26,17 +41,7 @@ class S {
   static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final name = (locale.countryCode?.isEmpty ?? false)
-        ? locale.languageCode
-        : locale.toString();
-    final localeName = Intl.canonicalizedLocale(name);
-    return initializeMessages(localeName).then((_) {
-      Intl.defaultLocale = localeName;
-      final instance = S();
-      S._current = instance;
-
-      return instance;
-    });
+    return SynchronousFuture<S>(_lookupS(locale));
   }
 
   static S of(BuildContext context) {
@@ -55,6 +60,16 @@ class S {
     return Intl.message(
       'Homepage',
       name: 'homePage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Did you see black screen?`
+  String get content1 {
+    return Intl.message(
+      'Did you see black screen?',
+      name: 'content1',
       desc: '',
       args: [],
     );
